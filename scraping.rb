@@ -29,7 +29,7 @@ class Scraping
 
   def extract_features(apk_name, page)
     app = App.new(apk_name)
-    app.titile = page.css('div.info-container div.document-title').text.strip
+    app.title = page.css('div.info-container div.document-title').text.strip
     title_arr = page.css('div.info-container .document-subtitle')
     
     app.creator = title_arr[0].text.strip
@@ -38,6 +38,16 @@ class Scraping
     app.date_published = Date.strptime(date_string,"%B %d, %Y")
     app.category = page.css("span[itemprop='genre']").text.strip
     app.category_url = BASE_URL + title_arr[2]['href']
+    if (page.css('span.buy-button-container.apps.medium.play-button button.price.buy span[2]').text.strip == "Install")
+      app.price = "$0"
+    else
+      app.price = page.css('span.buy-button-container.apps.medium.play-button button.price.buy span[2]').text.strip[0...-4]
+    end
+    if (page.css('div.inapp-msg').text.strip == "Offers in-app purchases")
+      app.in_app_purchase = "Yes"
+    else
+      app.in_app_purchase = "No"
+    end
     app.ratings_count = page.css('div.reviews-stats span.reviews-num').text.strip
     app.rating =page.css('div.rating-box div.score-container div.score').text.strip
     app.description = page.css('div.show-more-content div.id-app-orig-desc').text.strip
