@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require 'json'
 require 'yaml'
 require 'optparse'
 require 'date'
@@ -74,9 +75,11 @@ class Scraping
     new_changes_list.each do |change|
       changes << change.text.strip
     end
-    app.what_is_new = changes unless changes.empty? 
-    serialized_app = YAML::dump(app)
-    puts serialized_app
+    app.what_is_new = changes unless changes.empty?
+  #  data = YAML::dump(app)
+  #  serialized_app = JSON.dump(app.to_json)
+  #  puts serialized_app
+    puts app.to_json
     
   end
 

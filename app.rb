@@ -1,4 +1,8 @@
-class App
+#!/usr/bin/env ruby -wKU
+require File.expand_path('../jsonable.rb', __FILE__)
+
+
+class App < JSONable
   attr_reader :name
   attr_accessor :title, :creator, :creator_url, :date_published,
   :category, :category_url, :price, :in_app_purchase, :ratings_count, :rating,
