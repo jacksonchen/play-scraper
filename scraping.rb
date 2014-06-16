@@ -76,10 +76,9 @@ class Scraping
       changes << change.text.strip
     end
     app.what_is_new = changes unless changes.empty?
-  #  data = YAML::dump(app)
-  #  serialized_app = JSON.dump(app.to_json)
-  #  puts serialized_app
-    puts app.to_json
+    File.open('data.json', 'w') do |f|
+      f.write(app.to_json)
+    end
     
   end
 
