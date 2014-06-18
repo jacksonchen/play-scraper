@@ -4,7 +4,7 @@ class JSONable
         self.instance_variables.each do |var|
             hash[var] = self.instance_variable_get var
         end
-        hash.to_json
+        JSON.pretty_generate(hash)
     end
     def from_json! string
         JSON.load(string).each do |var, val|
